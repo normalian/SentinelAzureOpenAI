@@ -1,38 +1,35 @@
-# はじめに
-> Microsoft Sentinel / Azure Open AI 演習のレポジトリです。
-
-Microsoft Sentinel のインシデント作成をトリガーに Azure OpenAI GPT/ChatGPT を用いた活用を体験いただくレポジトリになります。
+# Workshop for  Microsoft Sentinel / Azure Open AI
+This workshop enable you to configure Microsoft Sentinel to create incident and trigger Azure OpenAI GPT/ChatGPT.
 ![image](https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/96135a01-3aff-471a-8a37-0c373fd50db4)
 
-# 演習の目的
-> 本演習の目的は Microsoft Sentinel のインシデントを Azure OpenAI を用いて活用するためのトレーニングコンテンツです。
+# Objective 
 
-- Microsoft Sentinel から Azure OpenAI を活用する環境を作成する
-- 本演習を通じて、ロジックアプリと Azure OpenAI のモデルを理解する / Prompt の活用を考える
+> The purpose of this exercise is to provide training content for leveraging Microsoft Sentinel incidents with Azure OpenAI.
 
-# 前提条件
-> 前提条件を以下に示します。演習によるリソース作成、利用分は有償になります。
+- Create an environment to leverage Azure OpenAI from Microsoft Sentinel
+- Understand the model of Azure OpenAI Logic App through this exercise / Consider the use of Prompt
 
-- Microsoft Sentinel の環境を自テナントに有すること
-- Azure OpenAI が利用可能であること **(※ 2023.5.15 現在、Azure では事前申請が必要です)**
+# Prerequisite
+Prerequisites are as follows. You will incur Azure resources fee through this exercise.
+
+- Create Microsoft Sentinel resource on your tenant
+- Enable Azure OpenAI on your subscription **( You have to complete Request Access as follows before starting this exercise as of 31th May 2023 )**
   -   https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUOFA5Qk1UWDRBMjg0WFhPMkIzTzhKQ1dWNyQlQCN0PWcu
-- Microsoft Sentinel に対して、何らかの分析ルールによるアラート発砲が可能であること
-  -   本演習では Microsoft Defender for Cloud とデータコネクタを接続し、Microsoft Defender for Cloud のサンプルアラートによる効果を想定しています。
+- Enable to launch an alert to Microsoft Sentinel based on some analysis rules.
+  - Microsoft Sentinel connects to Microsoft Defender for Cloud with data connector, then you use sample alerts from Microsoft Defender for Cloud in this exercise.
 
-# 演習内容
-> ワークショップのコンテンツはこちらです。
+# Contents
+Follow steps as follows.
+- [Before hands-on Create Azure OpenAI resource](https://github.com/normalian/SentinelAzureOpenAI/blob/main/preconfiguration.md)
+- [Exercise 1: Make a mail response with Azure OpenAI and Logic Apps](https://github.com/normalian/SentinelAzureOpenAI/blob/main/Work1.md)
+- [Exercise 2: Leverage Microsoft Sentinel trigger and translate analysis rule with Azure OpenAI using Logic Apps](https://github.com/normalian/SentinelAzureOpenAI/blob/main/Work2.md)
+- [Lookback: How can we leverage Azure OpenAI prompt](https://github.com/normalian/SentinelAzureOpenAI/blob/main/Work3.md)
+- [Excercise 3: Advanced - Custmize inquiry to Azure OpenAI based on incident of Microsoft Sentinel](https://github.com/normalian/SentinelAzureOpenAI/blob/main/Work4.md)
 
-以下の順番で演習を実践して下さい。
-- [事前準備 Azure OpenAI サービスの作成](https://github.com/hisashin0728/SentinelAzureOpenAI/blob/main/preconfiguration.md)
-- [演習1. Azure OpenAI ロジックアプリを用いて、メールによる応答を実践する](https://github.com/hisashin0728/SentinelAzureOpenAI/blob/main/Work1.md)
-- [演習2. Microsoft Sentinel のインシデントトリガーを用いて、ロジックアプリを用いて Azure OpenAI に分析ルールの翻訳を実行させる](https://github.com/hisashin0728/SentinelAzureOpenAI/blob/main/Work2.md)
-- [振り返り Azure OpenAI の prompt 活用を考える](https://github.com/hisashin0728/SentinelAzureOpenAI/blob/main/Work3.md)
-- [演習3. [応用] Microsoft Sentinel のインシデント情報から Azure OpenAI への問い合わせをカスタマイズする](https://github.com/hisashin0728/SentinelAzureOpenAI/blob/main/Work4.md)
-- [FAQ](https://github.com/hisashin0728/SentinelAzureOpenAI/blob/main/FAQ.md)
+- [FAQ](https://github.com/normalian/SentinelAzureOpenAI/blob/main/FAQ.md)
 
-# 免責事項
-> 本レポジトリの演習は課金が発生します。
-
-- 本レポジトリの演習によって発生するコストについては、利用するユーザーが責任を負います。
-- 本レポジトリの演習によって作成される環境から出力される内容について、作成者は責任を負いません。
-- 本レポジトリはオープンソースです。 
+# Disclaimer
+> Exercises in this repository will incur charges of Azure resources.
+- The user is responsible for any costs incurred by this exercise.
+- The author is not responsible for outcome from this exercise.
+- This repository is open source.
