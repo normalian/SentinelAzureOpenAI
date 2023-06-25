@@ -5,9 +5,9 @@ First, figure out how to use Azure OpenAI. Try Azure OpenAI with Office 365 mail
 As an outcome, you will create a bot service that send your question's answer, Azure OpenAI creates, to an email address.
 
 - **Send a mail**<BR>
-  <img width="300" alt="image" src="https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/d3dbb99a-1689-455e-98ca-6372bb3477c4"><BR>
+  <img width="300" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-01.png"><BR>
 - **Receive a mail**<BR>
-  <img width="560" alt="image" src="https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/024802d3-351b-478c-97d8-f6f39f2f0f6e">
+  <img width="560" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-02.png">
 
 # Prerequisite 
 > Use a resource group in JapanEast region for this exercise
@@ -49,7 +49,7 @@ Register API key for Azure OpenAI in the Azure Logic Apps.
 <img width="837" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-06.png">
 
   - Put Azure OpenAI key in your Azure Logic Apps
-! [image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-07.png)
+![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-07.png)
 
 ### 3.2.2 Configure REST API of Azure Logic Apps to use Azure OpenAI on your tenant 
 The REST API, deployed on the Azure Logic Apps, has a sample URL, so update the endpoint for your environment.
@@ -63,12 +63,14 @@ The REST API, deployed on the Azure Logic Apps, has a sample URL, so update the 
 
 ### 3.2.3 Send a mail the email address
 The last step of Azure Logic Apps is to reply a mail to the email address. The Azure Logic App returns ``text`` obtained from Azure OpenAI for the sender of the email.
+
 <img width="525" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-09.png">
 
 # 4. Run test
 Let's test with Title: "OpenAI question" for the email address you set up.<BR>
-After a few minutes, you should get reply from Azure OpenAI.<P>
-<img width="299" alt="image" src="https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/5e1fdd8b-7095-4228-9775-b8a1ba4b3326">
+After a few minutes, you should get reply from Azure OpenAI.
+
+<img width="299" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-01.png">
 
 ** Note **
  - Send a mail up to 4,000 characterss to avoid token limitation.
