@@ -41,14 +41,14 @@ Rrant roles on a subscription basis, not on a resource group as possible.
 - You have to grant Sentinel Responder role to a resource group which has a Microsoft Sentinel resource.
 - You have to grant Cognitive Services OpenAI role to a resource grrop which has a Azure OpenAI resource. 
 
-[2023.5.18 Update] [We can access Azure OpenAI with managed identity assigned Cognitive Service OpenAI User privilege](https://zenn.dev/microsoft/articles/call-openai-from-logicapps-with-managedid) - This artilce is written in Japanese, so use translation to read the detail.
+[2023.5.18 Update] [We can access Azure OpenAI with managed identity assigned Cognitive Service OpenAI User privilege](https://zenn.dev/microsoft/articles/call-openai-from-logicapps-with-managedid) - This article is written in Japanese, so use translation to read the detail.
 
 <img width="826" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work2-04.png">
 
 ## 3.2 Configure REST API on Azure Logic Apps
 The REST API endpoint of the deployed Azure Logic Apps is setup with a sample URL. Update the URL for your environment. 
 
-![image](https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/91fa2cd9-0b50-4dbc-b87b-ceac609612a1)
+![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work2-05.png)
 
 |  Parameter  | Sample |
 | ---- | ---- |
@@ -68,6 +68,7 @@ If you have pre-configured your playbook, such as email notifications, you can s
 
 ## 3.4 Sentinel - Trigger the playbook with the automation rule
 Create an automation rule to trigger the playbook when an incident occurs. You can get translated notification with this automation rule if you have pre-configured your playbook to notify via email.
+
 <img width="372" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work2-07.png">
 
 # 4. Test
