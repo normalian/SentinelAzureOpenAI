@@ -1,86 +1,88 @@
-# 演習. Microsoft Sentinel のインシデントから Azure OpenAI に問い合わせをかける
-> Microsoft Sentinel のインシデントトリガーによる Azure OpenAI 連携を実践してみましょう
+# Exercise: Leverage Azure OpenAI with Microsoft Sentinel for incidents
+> Query to Azure OpenAI based onIncident Trigger of Microsoft Sentinel  
 
-Microsoft Sentinel のインシデント発生時に、Azure OpenAI に問い合わせを行い、分析ルールの日本語訳を行います。
+When an incident of Microsoft Sentinel occurs, query Azure OpenAI and translate the analysis rules into other natural launguage.
 
-# 実行イメージ
-Sentinel のインシデントが検知すると、分析ルールの補足 (Description) を ChatGPT が翻訳するテンプレートになります。
-![image](https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/74a2ad6a-a4fc-4cb8-b448-fcd896e3597b)
+# Outcome
+When a Sentinel incident is detected, the outcome of this excercise describes the detail of the inccident by using ChatGPT.
+![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work2-01.png)
 
-# 事前準備
-> JapanEast のリソースグループでテンプレートを利用して下さい
-- 本演習で作成するリソース（例：ロジックアプリなど）のためのリソースグループを作成して下さい
-- 演習 1 と同じリソースグループでも OK です
--　以下設定例です。リージョンは東日本を前提として下さい
-- リソースグループ名 ``rg-Sentinel-AzureOpenAI-Workshop``
-- リージョン ``Japan East``
-  
-<img width="620" alt="image" src="https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/72c9e870-063e-45b1-9028-2f4f9d952076">
+# Prerequisite 
+> Deploy the templates on a resource group in Japan East 
+- Create a resource group for Azure resources you will create in this exercise (e.g., logic apps, etc.)
+- The following is a sample configuration. You can use the same resource group as in exercise 1. We assume that the region is East Japan.
+- Resource group name ``rg-Sentinel-AzureOpenAI-Workshop`` 
+- Region ``Japan East``
 
-# 1.テンプレートの概要
-> ARM テンプレートを用いて、ロジックアプリを導入します。
+<img width="620" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-03.png">
 
-- Microsoft Sentinel ではオートメーション機能を用いて、Logic Apps を通じて様々な自動化操作を行う機能を提供しています。 
-- テンプレートを導入することで、インシデント発生時に Azure OpenAI に問い合わせを行い、prompt を用いて分析ルール補足分の翻訳を実行します。
+# 1. Overview of the template 
+> The ARM template deploys Azure Logic Apps.
 
-<img width="1080" alt="image" src="https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/20d3dc5b-09ff-4106-a049-fcd3bde4f364">
+- Microsoft Sentinel allows you to perform various automation processes by using Azure Logic Apps. 
+- With this ARM template, you can query Azure OpenAI when an incident occurs and use the prompt to translate the analysis rule.
 
-# 2. テンプレートの導入
-以下から、ARM テンプレートをデプロイして下さい。<p>
+<img width="1080" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work2-03.png">
+
+# 2. Deploy the ARM template
+Deploy the ARM template from the following button<p>
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhisashin0728%2FSentinelAzureOpenAI%2Fmain%2Ftemplate.json)
 
-# 3. 設定
-演習 1 と同様にロジックアプリの内容を編集して下さい。
-## 3.1 ロジックアプリ - マネージド ID に対するロールの付与
-ロジックアプリから Microsoft Sentinel のインシデントを更新させるため、ロジックアプリのマネージド ID に対して、以下 2 つのロールを付与します。<BR>
-演習1とは異なり、マネージド ID による認証でよりセキュアな接続を行います<BR>
+# 3. Setup Azure Logic Apps
+Setup Azure Logic Apps with the same settings as in exercise 1.
 
-- ロールの付与は、なるべくリソースグループではなくサブスクリプション単位で付与を行ってください。
-   - リソースグループに付与する場合は、Sentinel レスポンダーは Sentinel が適用されているリソースグループ
-   - Cognitive Services OpenAI User は AOAI が適用されているグループに適用する必要があります。
-- **Sentinel レスポンダー**
+## 3.1 Azure Logic Apps - assign role to managed identity
+Unlike Exercise 1, access Azure OpenAI securely by using a managed ID.<BR>
+In order to enable the Azure Logic App to update Microsoft Sentinel incidents, assign the following two roles to the Managed ID of the Azure Logic App:<BR>
+- **Sentinel Responder**
 - **Cognitive Services OpenAI User**
 
-[2023.5.18 Update] Azure OpenAI のリクエストに対しても、[マネージド ID 経由で「Cognitive Service OpenAI User」権限で接続が出来るようになりました！](https://zenn.dev/microsoft/articles/call-openai-from-logicapps-with-managedid)
+Rrant roles on a subscription basis, not on a resource group as possible.
+- You have to grant Sentinel Responder role to a resource group which has a Microsoft Sentinel resource.
+- You have to grant Cognitive Services OpenAI role to a resource grrop which has a Azure OpenAI resource. 
 
-<img width="826" alt="image" src="https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/aee56068-05b3-4455-a04c-f1595b5d29e8">
+[2023.5.18 Update] [We can access Azure OpenAI with managed identity assigned Cognitive Service OpenAI User privilege](https://zenn.dev/microsoft/articles/call-openai-from-logicapps-with-managedid) - This artilce is written in Japanese, so use translation to read the detail.
 
-  
-## 3.2 ロジックアプリ - RESTAPI の編集
-展開されたロジックアプリの REST API は URL がサンプルになっています。
-自テナントに合わせた設定に更新して下さい。
+<img width="826" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work2-04.png">
+
+## 3.2 Configure REST API on Azure Logic Apps
+The REST API endpoint of the deployed Azure Logic Apps is setup with a sample URL. Update the URL for your environment. 
+
 ![image](https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/91fa2cd9-0b50-4dbc-b87b-ceac609612a1)
 
 |  Parameter  | Sample |
 | ---- | ---- |
-| https://your-resource-name.openai.azure.com | https://(自分のエンドポイント).openai.azure.com |
-| deployment-id | モデル デプロイ名 |
+| https://your-resource-name.openai.azure.com | https://"your resource endpoint name".openai.azure.com |
+| deployment-id | model deployment name |
 
-## 3.3 Sentinel - プレイブックに対して「アクセスの許可」を設定する
-展開されたロジックアプリに対して Microsoft Sentinel がアクセスできるように、「設定」よりプレイブックのアクセス許可を与えます。
-![image](https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/4d86732a-8013-4430-93f5-452f154491c4)
 
-## 3.4 Sentinel - オートメーションルールでプレイブックを自動起動させる
-最後に、インシデント発生時にプレイブックが起動するようにオートメーションルールを作成します。
-もし、メール通知などのプレイブックを事前設定されている場合は、通知前に設定することで和訳された内容を通知することが出来るようになります。
-<img width="372" alt="image" src="https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/8fee8add-b8c7-4fc2-9943-9389c4d30b38">
 
-# 4. テスト
-> テストしてみましょう！
+## 3.3 Sentinel - Configure "Playbook permissions"
+Configure permissions to allow Microsoft Sentinel access to your Azure Logic Apps, so go to "Settings" and grant access permissions for the playbook.
+![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work2-06.png)
 
-設定が完了しましたら、Microsoft Sentinel に対してアラートを発砲してみましょう。
-- [Microsoft Defender for Cloud のサンプルアラート ( Defender for Cloud のコネクターを事前に設定）](https://learn.microsoft.com/ja-jp/azure/defender-for-cloud/alert-validation#generate-sample-security-alerts)
+## 3.4 Sentinel - Automation rule to automatically start the playbook
+Finally, create an automation rule so that the playbook is activated when an incident occurs.
+If you have pre-configured your playbook, such as email notifications, you can set it up before notification so that you are notified of the Japanese translated content.
 
-# 5. 確認ポイント
-> 確認してみましょう！
 
-  - Sentinel 分析ルールの翻訳は、どのように行われましたか？
-  - Azure OpenAI に対して、どのような prompt を送りましたか？
-  - Sentinel インシデント更新はどのように行われましたか？
-  - Azure OpenAI に対して、パラメータ設定はありましたか？
+## 3.4 Sentinel - Trigger the playbook with the automation rule
+Create an automation rule to trigger the playbook when an incident occurs. You can get translated notification with this automation rule if you have pre-configured your playbook to notify via email.
+<img width="372" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work2-07.png">
+
+# 4. Test
+> Perform the test!
+Generate a sample security alert for Microsoft Sentinel.
+- [Alert validation in Microsoft Defender for Cloud](https://learn.microsoft.com/en-us/azure/defender-for-cloud/alert-validation#generate-sample-security-alerts)
+
+# 5. Checklist
+> Validte topics as follows.
+  - How was the Sentinel analysis rules translated?
+  - What prompt was sent to Azure OpenAI?
+  - How was the Sentinel incident updated?
+  - Were any parameters set for Azure OpenAI?
 
 # 6. Next Action
-> お疲れさまでした！
+> Congratulation!
 
-次の[振り返り](https://github.com/hisashin0728/SentinelAzureOpenAI/blob/main/Work3.md)に移って下さい。 
-
+Move to next section [Lookback](https://github.com/hisashin0728/SentinelAzureOpenAI/blob/main/Work3.md).

@@ -22,9 +22,9 @@ Prerequisites are as follows. You will incur Azure resources fee through this ex
 Follow steps as follows.
 - [Before hands-on Create Azure OpenAI resource](https://github.com/normalian/SentinelAzureOpenAI/blob/main/preconfiguration.md)
 - [Exercise 1: Make a mail response with Azure OpenAI and Logic Apps](https://github.com/normalian/SentinelAzureOpenAI/blob/main/Work1.md)
-- [Exercise 2: Leverage Microsoft Sentinel trigger and translate analysis rule with Azure OpenAI using Logic Apps](https://github.com/normalian/SentinelAzureOpenAI/blob/main/Work2.md)
+- [Exercise 2: Leverage Azure OpenAI with Microsoft Sentinel for incidents](https://github.com/normalian/SentinelAzureOpenAI/blob/main/Work2.md)
 - [Lookback: How can we leverage Azure OpenAI prompt](https://github.com/normalian/SentinelAzureOpenAI/blob/main/Work3.md)
-- [Excercise 3: Advanced - Custmize inquiry to Azure OpenAI based on incident of Microsoft Sentinel](https://github.com/normalian/SentinelAzureOpenAI/blob/main/Work4.md)
+- [Exercise 3: Advanced - Custmize inquiry to Azure OpenAI based on incident of Microsoft Sentinel](https://github.com/normalian/SentinelAzureOpenAI/blob/main/Work4.md)
 
 - [FAQ](https://github.com/normalian/SentinelAzureOpenAI/blob/main/FAQ.md)
 

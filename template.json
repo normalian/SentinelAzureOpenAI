@@ -66,14 +66,14 @@
                                 "body": {
                                     "frequency_penalty": 2,
                                     "max_tokens": 3000,
-                                    "prompt": "Please translate to Japanese @{triggerBody()?['object']?['properties']?['description']}",
+                                    "prompt": "Translate to Japanese as follows: @{triggerBody()?['object']?['properties']?['description']}",
                                     "temperature": 0
                                 },
                                 "headers": {
                                     "Content-Type": "application/json"
                                 },
                                 "method": "POST",
-                                "uri": "https://yourname.openai.azure.com/openai/deployments/yourmodel/completions?api-version=2022-12-01"
+                                "uri": "https://yourname.openai.azure.com/openai/deployments/yourmodel/completions?api-version=2023-03-15-preview"
                             }
                         },
                         "For_each": {
