@@ -9,7 +9,7 @@ When a Sentinel incident is detected, the outcome of this excercise describes th
 
 # Prerequisite 
 > Deploy the templates on a resource group in Japan East 
-- Create a resource group for Azure resources you will create in this exercise (e.g., logic apps, etc.)
+- Create a resource group for Azure resources you will create in this exercise (e.g., Azure Logic App, etc.)
 - The following is a sample configuration. You can use the same resource group as in exercise 1. We assume that the region is East Japan.
 - Resource group name ``rg-Sentinel-AzureOpenAI-Workshop`` 
 - Region ``Japan East``
@@ -17,9 +17,9 @@ When a Sentinel incident is detected, the outcome of this excercise describes th
 <img width="620" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-03.png">
 
 # 1. Overview of the template 
-> The ARM template deploys Azure Logic Apps.
+> The ARM template deploys Azure Logic App.
 
-- Microsoft Sentinel allows you to perform various automation processes by using Azure Logic Apps. 
+- Microsoft Sentinel allows you to perform various automation processes by using Azure Logic App. 
 - With this ARM template, you can query Azure OpenAI when an incident occurs and use the prompt to translate the analysis rule.
 
 <img width="1080" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work2-03.png">
@@ -28,10 +28,10 @@ When a Sentinel incident is detected, the outcome of this excercise describes th
 Deploy the ARM template from the following button<p>
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhisashin0728%2FSentinelAzureOpenAI%2Fmain%2Ftemplate.json)
 
-# 3. Setup Azure Logic Apps
-Setup Azure Logic Apps with the same settings as in exercise 1.
+# 3. Setup Azure Logic App
+Setup Azure Logic App with the same settings as in exercise 1.
 
-## 3.1 Azure Logic Apps - assign role to managed identity
+## 3.1 Azure Logic App - assign role to managed identity
 Unlike Exercise 1, access Azure OpenAI securely by using a managed ID.<BR>
 In order to enable the Azure Logic App to update Microsoft Sentinel incidents, assign the following two roles to the Managed ID of the Azure Logic App:<BR>
 - **Sentinel Responder**
@@ -45,8 +45,8 @@ Rrant roles on a subscription basis, not on a resource group as possible.
 
 <img width="826" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work2-04.png">
 
-## 3.2 Configure REST API on Azure Logic Apps
-The REST API endpoint of the deployed Azure Logic Apps is setup with a sample URL. Update the URL for your environment. 
+## 3.2 Configure REST API on Azure Logic App
+The REST API endpoint of the deployed Azure Logic App is setup with a sample URL. Update the URL for your environment. 
 
 ![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work2-05.png)
 
@@ -58,7 +58,7 @@ The REST API endpoint of the deployed Azure Logic Apps is setup with a sample UR
 
 
 ## 3.3 Sentinel - Configure "Playbook permissions"
-Configure permissions to allow Microsoft Sentinel access to your Azure Logic Apps, so go to "Settings" and grant access permissions for the playbook.
+Configure permissions to allow Microsoft Sentinel access to your Azure Logic App, so go to "Settings" and grant access permissions for the playbook.
 ![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work2-06.png)
 
 ## 3.4 Sentinel - Automation rule to automatically start the playbook

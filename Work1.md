@@ -34,25 +34,25 @@ Deploy ARM template below on your resource group.
 https://github.com/format81/AzureOpenAI-LogicApp
 
 
-# 3. Setup Azure Logic Apps 
-Finish configuration of Azure Logic Apps to run it.
+# 3. Setup Azure Logic App 
+Finish configuration of Azure Logic App to run it.
 
 ## 3.1 Setup API Authentication of Office 365 Connector
-Azure Logic Apps require API authentication for Office 365 account. From the Edit API connection, press "Authorize" and authenticate with the address you receive emails from ( we use ``openai@[tenant name].onmicrosoft.com`` in this example).
+Azure Logic App require API authentication for Office 365 account. From the Edit API connection, press "Authorize" and authenticate with the address you receive emails from ( we use ``openai@[tenant name].onmicrosoft.com`` in this example).
 <img width="427" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-05.png">
 
-## 3.2 Setup the Azure Logic Apps
+## 3.2 Setup the Azure Logic App
 ### 3.2.1 Register Azure OpenAI API key
-Register API key for Azure OpenAI in the Azure Logic Apps.
+Register API key for Azure OpenAI in the Azure Logic App.
 
   - Check Azure OpenAI API key
 <img width="837" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-06.png">
 
-  - Put Azure OpenAI key in your Azure Logic Apps
+  - Put Azure OpenAI key in your Azure Logic App
 ![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-07.png)
 
-### 3.2.2 Configure REST API of Azure Logic Apps to use Azure OpenAI on your tenant 
-The REST API, deployed on the Azure Logic Apps, has a sample URL, so update the endpoint for your environment.
+### 3.2.2 Configure REST API of Azure Logic App to use Azure OpenAI on your tenant 
+The REST API, deployed on the Azure Logic App, has a sample URL, so update the endpoint for your environment.
 ![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-08.png)
 
 |  Parameter  | Sample |
@@ -62,7 +62,7 @@ The REST API, deployed on the Azure Logic Apps, has a sample URL, so update the 
 
 
 ### 3.2.3 Send a mail the email address
-The last step of Azure Logic Apps is to reply a mail to the email address. The Azure Logic App returns ``text`` obtained from Azure OpenAI for the sender of the email.
+The last step of Azure Logic App is to reply a mail to the email address. The Azure Logic App returns ``text`` obtained from Azure OpenAI for the sender of the email.
 
 <img width="525" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work1-09.png">
 

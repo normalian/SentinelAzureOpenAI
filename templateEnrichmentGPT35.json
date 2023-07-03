@@ -5,7 +5,7 @@
         "title": "Sentinel Incident Enrichment By AzureOpenAI",
         "description": "Microsoft Sentinel Incident Enrichment by Azure Open AI",
         "author": {
-            "name": "Hisashi Nakada"
+            "name": "Hisashi Nakada & Daichi Isami"
         }
     },
     "parameters": {
@@ -70,7 +70,7 @@
                                     "stop" : null,
                                     "messages" : [
                                         {"role":"system","content":"You are a security analytist."},
-                                        {"role":"user","content":"I would like you to come up with an query idea to hunt in 3000 characters or less in Japanese using KQL."},
+                                        {"role":"user","content":"Suggest a KQL query to search the incident, up to 3000 characters."},
                                         {"role":"assistant","content":"@{triggerBody()?['object']?['properties']?['description']}"}
                                     ]
                                 },
@@ -96,7 +96,7 @@
                                     "stop" : null,
                                     "messages" : [
                                         {"role":"system","content":"You are a security analytist."},
-                                        {"role":"user","content":"Please translate to Japanese."},
+                                        {"role":"user","content":"Translate to Japanese."},
                                         {"role":"assistant","content":"@{triggerBody()?['object']?['properties']?['description']}"}
                                     ]
                                 },
@@ -122,7 +122,7 @@
                                     "stop" : null,
                                     "messages" : [
                                         {"role":"system","content":"You are a security analytist."},
-                                        {"role":"user","content":"Please summary security incident in 1000 Japanese words."},
+                                        {"role":"user","content":"Summary security incident up to 1000 words."},
                                         {"role":"assistant","content":"@{triggerBody()?['object']?['properties']?['title']}, @{triggerBody()?['object']?['properties']?['description']}"}
                                     ]
                                 },

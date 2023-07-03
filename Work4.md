@@ -1,20 +1,20 @@
-# 応用編
-> ここからは Microsoft Sentinel のインシデントを更に活用するための Azure OpenAI 活用を考えてみましょう
+# Advanced
+> Let's consider leveraging Azure OpenAI to further use Microsoft Sentinel incidents.
 
-本パートでは Microsoft Sentinel の Azure OpenAI の更なる活用ストーリーを実践してみるパートになります。
+We have practical use cases to further leverage both Microsoft Sentinel and Azure OpenAI in this exercise.
 
-# 1. ユースケースアイデア
-> Microsoft Sentinel のインシデント情報から、セキュリティオペレーターが活用するための様々なアイデア
+# 1. Ideas for practical use cases 
+> Ideas for security operators to leverage Microsoft Sentinel incident information.
 
-## ユースケース 1 - MITRE 戦術の概要を説明してもらう
-分析ルールに含まれる MITRE 戦術について、補足情報としてコメントに付与するなどが考えられます。
+## Use Case 1 - Add overview of MITRE tactics
+Add comments based on MITRE tactics included in the analysis rules as supplementary information.
 
-- prompt 例
+- Example: prompt 
 ```
-MITRE 戦術 ###[ "LateralMovement", "Execution" ]### について、100 文字以内で解説してほしい。
+Describe the MITRE Tactics ###["LateralMovement", "Execution"]### up to 100 words.
 ```
 
-- Chat Completion API 例
+- Example: Chat Completion API
 ```
 [
   {
@@ -32,50 +32,19 @@ MITRE 戦術 ###[ "LateralMovement", "Execution" ]### について、100 文字�
 ]
 ```
 
-<img width="697" alt="image" src="https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/6e1ccaba-7d4f-4aec-8219-16e0e29a5416">
+<img width="697" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-01.png">
 
-## ユースケース 2 - インシデントタイトルとインシデント補足から、要約をまとめさせる
-インシデント情報を ChatGPT にまとめて送り、インシデント要約をまとめさせるアイデアです。
+## Use Case 2 - Summarize Incident from Incident Title and Incident Description
+Send all information of the incident to ChatGPT and summarize it.
 
-- prompt 例
-```
-私はセキュリティアナリストです。
-セキュリティインシデントの内容を1000文字以内で概要にまとめてほしい。
+- Example - prompt
+```` I am a security analyst.
+I am a security analyst. I need a summary of a security incident up to 1000 characters.
 
-### [インシデントタイトル], [インシデントの説明], [インシデントのエンティティ] ###
-```
-
-- Chat Completion API 例
-```
-[
-  {
-    "role": "system",
-    "content": "You are a security analytist."
-  },
-  {
-    "role": "user",
-    "content": "I want you to summarize the content of the security incident in 1000 characters or less."
-  },
-  {
-    "role": "assistant",
-    "content": "[インシデントタイトル], [インシデントの説明], [インシデントのエンティティ]"
-  }
-]
+### [incident title], [incident description], [incident entity] ###
 ```
 
-## ユースケース 3 - ハンティングするための KQL を生成させる
-分析ルール名や補足内容、ChatGPT の一次応答を用いて、インシデントを判定するための KQL を生成させます。
-
-- prompt 例
-```
-Microsoft Sentinel で脅威を調査するための KQL を提案してほしい
-
-###
-あなたのAzureストレージアカウント「Sample-Storage」に実行可能ファイルを異常な方法でアップロードした人がいます。 この警告はADLS Gen2トランザクションによって引き起こされました。
-###
-```
-
-- Chat Completion API 例
+- Example - Chat Completion API
 ```
 [
   {
@@ -84,81 +53,101 @@ Microsoft Sentinel で脅威を調査するための KQL を提案してほし�
   },
   {
     "role": "user",
-    "content": "I would like you to come up with a query idea to hunt in 3000 characters in Japanese or less using KQL."
+    "content": "I want you to summarize the content of the security incident up to 1000 characters."
   },
   {
     "role": "assistant",
-    "content": "[インシデントタイトル], [インシデントの説明], [インシデントのエンティティ]"
+    "content": "[incident title], [incident description], [incident entity]"
   }
 ]
 ```
 
-<img width="698" alt="image" src="https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/b5bd198f-5d6c-41c5-8c22-a47acb566bd3">
+## Use Case 3 - Suggest a KQL query for hunting
+Suggest a KQL to identify the incident using the analysis rule name, supplemental content, and ChatGPT primary response.
+
+- Example - prompt 
+````
+Suggest a KQL to investigate a threat with Microsoft Sentinel.
+
+###
+Someone has uploaded an executable file to your Azure storage account "Sample-Storage" in an unusual manner. This alert was triggered by an ADLS Gen2 transaction.
+###
+```
+
+- Example - Chat Completion API
+```
+[
+  {
+    "role": "system",
+    "content": "You are a security analytist."
+  },
+  {
+    "role": "user",
+    "content": "Suggest a KQL query to search the incident, up to 3000 characters."
+  },
+  {
+    "role": "assistant",
+    "content": "[incident title], [incident description], [incident entity]"
+  }
+]
+```
+
+<img width="698" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-02.png">
 
 
-# 2. 演習 インシンデント情報を用いて、Azure OpenAI に様々なリクエストをかけてみる gpt-3.5-turbo/GPT4 編)
-> 様々なユースケースを用いて、Azure OpenAI にリクエストをかけてみましょう
+# 2. Leverage Azure OpenAI for Microsoft Sentinel incidents with gpt-3.5-turbo/GPT4
+> Let's leverage Azure OpenAI for various use cases.
 
-インシデント情報から、ロジックアプリを用いて Azure OpenAI の ChatGPT/GPT3 に以下のリクエストをかけるテンプレートを試してみましょう。なお、本テンプレートは ChatGPT3.5turbo or GPT4 を想定して、Chat Completion API を用いて作成しています。デプロイするモデルは ``GPT35-turbo`` を選定するようにして下さい。
-- インシデントの要約
-- インシデント補足情報の日本語化
-- インシデント
+Let's Leverage ARM template template which leverages Azure OpenAI ChatGPT/GPT3 from incident information using Azure Logic App. In this section, the ARM template creates Chat Completion API using ChatGPT3.5turbo or GPT4, thus select ``GPT35-turbo`` as the model to deploy.
+- Incident Summary
+- Incident supplementary information in your natural language - Your Azure Logic App translates into Japanese
+- Incident
 
-![image](https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/a84df34e-1649-4c3c-9cd7-77a73543bc8d)
+![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-03.png)
 
-# 事前準備
-> これまでと同様に JapanEast のリソースグループでテンプレートを利用して下さい
-- 本演習で作成するリソース（例：ロジックアプリなど）のためのリソースグループを作成して下さい
-- 演習 1 と同じリソースグループでも OK です
--　以下設定例です。リージョンは東日本を前提として下さい
-- リソースグループ名 ``rg-Sentinel-AzureOpenAI-Workshop``
-- リージョン ``Japan East``
-- Azure OpenAI は ``gpt-35-turbo`` を選択する
-<img width="723" alt="image" src="https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/6d4c6cb6-ff8a-498c-b98e-df531a96b360">
-
-
-# 3. テンプレートの導入
-以下から、ARM テンプレートをデプロイして下さい。<p>
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhisashin0728%2FSentinelAzureOpenAI%2Fmain%2FtemplateEnrichmentGPT35.json)
-
-# 3. 設定
-これまでの演習と同様に、[ロジックアプリの内容を編集して下さい。](https://github.com/hisashin0728/SentinelAzureOpenAI/blob/main/Work2.md#3-%E8%A8%AD%E5%AE%9A)
- - Azure OpenAI RESTAPI URIの編集
- - RESTAPI の URI が変わっていることに注意して下さい。
-   - ``https://{yourname}.openai.azure.com/openai/deployments/{yourmodel}/chat/completions?api-version=2023-05-15``
- - ロジックアプリ / マネージド ID の「**Sentinel レスポンダー**」、「**Cognitive Services OpenAI User**」ロールの付与
- - Microsoft Sentinel ロジックアプリ実行権限設定
- - Microsoft Sentinel オートメーションルールの作成
-
-# 4. テスト
-> サンプルアラートを発砲してみましょう。ChatGPT/GPT3 を用いることで、どのような情報が付与されましたか？
-
-テンプレートによって実現できたこと
- - **ルール説明の自動和訳**
-  - ![image](https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/a47781f4-9cc0-45d3-b531-26211e89b6d5)
- - **タグ情報の追加**
-  - ![image](https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/7ffc7844-2471-47ff-9572-a0e1a82dd5ce)
- - **インシデントのサマリー要約**
-  - ![image](https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/f15064d4-847f-4940-ae90-29274f96773c)
- - **インシデントタスクに KQL の提案**
-  - <img width="316" alt="image" src="https://github.com/hisashin0728/SentinelAzureOpenAI/assets/55295601/c44c5510-4f77-49fe-9331-6e6abb0e6095">
-
-# 5. 他にどのようなアイデアがありますか？
-> デプロイされているテンプレートをカスタマイズして、自分なりの AI 活用を考えてみて下さい。
-
-# 6. お疲れさまでした！これにて終了になります。
-> ここまでお疲れさまでした。作成したリソースグループを削除してクリーンナップして下さい。
-
-- 質問事項などを [FAQ](https://github.com/hisashin0728/SentinelAzureOpenAI/blob/main/FAQ.md) にまとめています。合わせてご参照下さい。
-- ご意見などございましたら、[Discussion](https://github.com/hisashin0728/SentinelAzureOpenAI/discussions) にてご連絡下さい。
-
-# 7. [アンケート](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbRz9kK29SrCBLqv7mxsgrvl9UQVdETVBLTjNaQ1RJVVBPV1RWSDNSSzgxWC4u)にご記入下さい。
-> 作成者のモチベーションになります
-
-- [アンケートURL](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbRz9kK29SrCBLqv7mxsgrvl9UQVdETVBLTjNaQ1RJVVBPV1RWSDNSSzgxWC4u)
-
-  
-  
+# Prerequisite
+> Deploy the ARM template a resource groups in JapanEast
+- Create a resource group for other Azure resources you will create in this exercise for example Azure Logic App or others. You can use same resource group with exercise 1.
+- The following are sample configurations. We assume that the region is East Japan.
+  - Resource group name is ``rg-Sentinel-AzureOpenAI-Workshop``.
+  - Azure region is ``Japan East``.
+  - Azure OpenAI model is ``gpt-35-turbo``.
+<img width="723" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-04.png">
 
 
+# 3. Deploy the ARM template
+Click a button below and deploy Azure resources with the ARM template.<p>
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnormalian%2FSentinelAzureOpenAI%2Fmain%2FtemplateEnrichmentGPT35.json)
 
+# 4. Configuration
+Setup [Azure Logic App](https://github.com/normalian/SentinelAzureOpenAI/blob/main/Work2.md#3-setup-azure-logic-apps) as follows.
+- Update the REST API URI of Azure OpenAI.
+  - ``https://{yourname}.openai.azure.com/openai/deployments/{yourmodel}/chat/completions?api-version=2023-05-15``
+  - Make sure that your REST API URI is updated.
+- Grant "**Sentinel Responder**" and "**Cognitive Services OpenAI User**" roles for Managed Identity of the Azure Logic App
+- Create an Automation Rule of Microsoft Sentinel 
+
+# 5. Run
+> Create sample alerts and check how ChatGPT/GPT3 updates the incidents.
+
+The ARM template allows features as follows.
+ - **Translation the rule into Japanese**
+  - ![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-05.png)
+ - **Add Tag**
+  - ![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-06.png)
+ - **Add summary of the incident**
+  - ![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-07.png)
+ - **Suggest KQL for the incident**
+  - <img width="316" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-08.png">
+
+# 6. Try another ideas!
+> Change the deployed Azure resources and make some ideas to leverage Azure OpenAI in your cases.
+
+# 7. Congratulation! You have worked out all exercise.
+> You have completed, so remove deployed resources.
+
+- Refer to [FAQ](https://github.com/normalian/SentinelAzureOpenAI/blob/main/FAQ.md). You can find popular questions.
+- Give us feedback for this exercise. Send your message on via [Discussion](https://github.com/normalian/SentinelAzureOpenAI/discussions).
+
+# 8. [Survey](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbRz9kK29SrCBLqv7mxsgrvl9UQVdETVBLTjNaQ1RJVVBPV1RWSDNSSzgxWC4u)
+> Give us your comments. It motivates us.
