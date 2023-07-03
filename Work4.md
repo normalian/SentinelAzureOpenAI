@@ -9,12 +9,12 @@ We have practical use cases to further leverage both Microsoft Sentinel and Azur
 ## Use Case 1 - Add overview of MITRE tactics
 Add comments based on MITRE tactics included in the analysis rules as supplementary information.
 
-- Example: prompt 
+- Example - prompt 
 ```
 Describe the MITRE Tactics ###["LateralMovement", "Execution"]### up to 100 words.
 ```
 
-- Example: Chat Completion API
+- Example - Chat Completion API
 ```
 [
   {
@@ -23,7 +23,7 @@ Describe the MITRE Tactics ###["LateralMovement", "Execution"]### up to 100 word
   },
   {
     "role": "user",
-    "content": "I want you to summarize the content of MITRE tactics in 100 characters or less."
+    "content": "I want you to summarize the content of MITRE tactics up to 100 words."
   },
   {
     "role": "assistant",
@@ -38,7 +38,7 @@ Describe the MITRE Tactics ###["LateralMovement", "Execution"]### up to 100 word
 Send all information of the incident to ChatGPT and summarize it.
 
 - Example - prompt
-```` I am a security analyst.
+``` I am a security analyst.
 I am a security analyst. I need a summary of a security incident up to 1000 characters.
 
 ### [incident title], [incident description], [incident entity] ###
