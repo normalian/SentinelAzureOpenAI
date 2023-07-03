@@ -66,7 +66,7 @@ I am a security analyst. I need a summary of a security incident up to 1000 char
 Suggest a KQL to identify the incident using the analysis rule name, supplemental content, and ChatGPT primary response.
 
 - Example - prompt 
-````
+```
 Suggest a KQL to investigate a threat with Microsoft Sentinel.
 
 ###
@@ -113,7 +113,6 @@ Let's Leverage ARM template template which leverages Azure OpenAI ChatGPT/GPT3 f
   - Azure region is ``Japan East``.
   - Azure OpenAI model is ``gpt-35-turbo``.
 <img width="723" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-04.png">
-
 
 # 3. Deploy the ARM template
 Click a button below and deploy Azure resources with the ARM template.<p>
