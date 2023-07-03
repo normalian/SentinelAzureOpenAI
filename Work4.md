@@ -99,9 +99,9 @@ Someone has uploaded an executable file to your Azure storage account "Sample-St
 > Let's leverage Azure OpenAI for various use cases.
 
 Let's Leverage ARM template template which leverages Azure OpenAI ChatGPT/GPT3 from incident information using Azure Logic App. In this section, the ARM template creates Chat Completion API using ChatGPT3.5turbo or GPT4, thus select ``GPT35-turbo`` as the model to deploy.
-- Incident Summary
-- Incident supplementary information in your natural language - Your Azure Logic App translates into Japanese
-- Incident
+- Suggest KQL for the incident 
+- Translate the incident into your natural language - Your Azure Logic App translates into Japanese
+- Summarize the incident as security analyst
 
 ![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-03.png)
 
@@ -135,9 +135,9 @@ The ARM template allows features as follows.
  - **Add Tag**
   - ![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-06.png)
  - **Add summary of the incident**
-  - ![image](https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-07.png)
+  - <img width="400" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-07.png">
  - **Suggest KQL for the incident**
-  - <img width="316" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-08.png">
+  - <img width="400" alt="image" src="https://github.com/normalian/SentinelAzureOpenAI/blob/main/img/work4-08.png">
 
 # 6. Try another ideas!
 > Change the deployed Azure resources and make some ideas to leverage Azure OpenAI in your cases.
